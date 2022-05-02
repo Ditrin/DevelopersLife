@@ -1,5 +1,6 @@
 package dl.aa.developerslife.presentation.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -53,6 +54,15 @@ class PlaceholderFragment : Fragment() {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(getCircularProgressDrawable())
                 .into(binding.gifImageView)
+        }
+
+        binding.shareButton?.setOnClickListener {
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, pageViewModel.gif.value?.description + "\n" +  pageViewModel.gif.value?.gifURL)
+                type = "text/plain"
+            }
+            startActivity(sendIntent)
         }
     }
 
